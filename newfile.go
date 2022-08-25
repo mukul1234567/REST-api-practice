@@ -151,26 +151,26 @@ func deleteUser(w http.ResponseWriter, r *http.Request) {
 func main() {
 	r := mux.NewRouter()
 
-	books = append(books, Book{ID: "1", ISBN: "7741852", Title: "Char",
-		Author: &Author{Firstname: "Sachin", Lastname: "Shinde"}},
-		Book{ID: "2", ISBN: "9963852", Title: "Pahunchaya",
-			Author: &Author{Firstname: "Virat", Lastname: "Patil"}})
-	users = append(users, User{Srno: "1", FirstName: "Chinmay",
-		LastName: "Ponting", Bookspurchased: 0, Amount: 0},
-		User{Srno: "2", FirstName: "Rushi", LastName: "Gilchrist",
-			Bookspurchased: 0, Amount: 0})
-	
-	r.HandleFunc("/api/books", getBooks).Methods("GET")
-	r.HandleFunc("/api/books/{id}", getBook).Methods("GET")
-	r.HandleFunc("/api/books", createBook).Methods("POST")
-	r.HandleFunc("/api/books/{id}", updateBook).Methods("PUT")
-	r.HandleFunc("/api/books/{id}", deleteBook).Methods("DELETE")
+	books[0] = Book{ID: "1", ISBN: "7741852", Title: "Char",
+		Author: &Author{Firstname: "Sachin", Lastname: "Shinde"}}
+	books[1] = Book{ID: "2", ISBN: "9963852", Title: "Pahunchaya",
+		Author: &Author{Firstname: "Virat", Lastname: "Patil"}}
+	users[0] = User{Srno: "1", FirstName: "Chinmay",
+		LastName: "Ponting", Bookspurchased: 0, Amount: 0}
+	users[1] = User{Srno: "2", FirstName: "Rushi", LastName: "Gilchrist",
+		Bookspurchased: 0, Amount: 0}
 
-	r.HandleFunc("/api/users", getUsers).Methods("GET")
-	r.HandleFunc("/api/users/{srno}", getUser).Methods("GET")
-	r.HandleFunc("/api/users", createUser).Methods("POST")
-	r.HandleFunc("/api/users/{srno}", updateUser).Methods("PUT")
-	r.HandleFunc("/api/users/{srno}", deleteUser).Methods("DELETE")
+	r.HandleFunc("/api/books", getBooks).Methods(http.MethodGet)
+	r.HandleFunc("/api/books/{id}", getBook).Methods(http.MethodGet)
+	r.HandleFunc("/api/books", createBook).Methods(http.MethodPost)
+	r.HandleFunc("/api/books/{id}", updateBook).Methods(http.MethodPut)
+	r.HandleFunc("/api/books/{id}", deleteBook).Methods(http.MethodDelete)
+
+	r.HandleFunc("/api/users", getUsers).Methods(http.MethodGet)
+	r.HandleFunc("/api/users/{srno}", getUser).Methods(http.MethodGet)
+	r.HandleFunc("/api/users", createUser).Methods(http.MethodPost)
+	r.HandleFunc("/api/users/{srno}", updateUser).Methods(http.MethodPut)
+	r.HandleFunc("/api/users/{srno}", deleteUser).Methods(http.MethodDelete)
 	http.Handle("/", r)
 
 	log.Fatal(http.ListenAndServe(":8000", r))
